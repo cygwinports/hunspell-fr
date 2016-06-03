@@ -1,0 +1,32 @@
+NAME="hunspell-fr"
+VERSION=4.6
+RELEASE=1
+CATEGORY="Text"
+SUMMARY="French dictionary for Hunspell"
+DESCRIPTION="Hunspell is a spell checker and morphological analyzer library and
+program designed for languages with rich morphology and complex compounding or
+character encoding.
+This package provides a French dictionary for Hunspell."
+HOMEPAGE="http://www.dicollecte.org/home.php?prj=fr"
+#SRC_URI="http://www.dicollecte.org/download/fr/hunspell-fr-classique+reforme1990-v${VERSION}.zip"
+md5sum=88435bf6542fde12f4cb362508c9344b
+SRC_URI="http://pkgs.fedoraproject.org/repo/pkgs/hunspell-fr/hunspell-fr-classique+reforme1990-v${VERSION}.zip/${md5sum}/hunspell-fr-classique+reforme1990-v${VERSION}.zip"
+SRC_DIR=.
+
+ARCH=noarch
+
+src_compile() { :; }
+
+src_install() {
+	cd ${S}
+	insinto /usr/share/myspell
+	newins fr-classique+reforme1990.aff fr_FR.aff
+	newins fr-classique+reforme1990.dic fr_FR.dic
+	dodoc *.txt
+
+	for l in fr_BE fr_CA fr_CH fr_LU fr_MC
+	do
+		dosym fr_FR.aff /usr/share/myspell/$l.aff
+		dosym fr_FR.dic /usr/share/myspell/$l.dic
+	done
+}
